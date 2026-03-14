@@ -3,156 +3,142 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Converse e ganhe</title>
+<title>Quick Access</title>
 
 <style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
+}
+
 body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:#000;
-  color:#fff;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-  text-align:center;
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+background:url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiku3FJw3uVulRrEkrlE0fIvJIE4xKfstnZ9PHzQiHe9eMuiMTN-H00n3jmBil-Y20UazboDGWJjoXV4T8ZSlovy3eIn6SFY5tBVcLeBA9YR2AeYiIhjtHJ0YT2gwwJeWvklo0rhyjbh_1SuCzS2DxNwUyd7RB8n3gR1AaCtMCr-gNTrLL2XTWZ_y63QWes/s600/641528183_1649399559838126_8518608694395462904_n.jpg") center/cover no-repeat;
+position:relative;
+padding:20px;
+}
+
+.overlay{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.35);
+backdrop-filter:blur(3px);
 }
 
 .container{
-  width:94%;
-  max-width:400px;
-  background:#121212;
-  border-radius:20px;
-  padding:25px;
-  box-shadow:0 10px 35px rgba(0,0,0,0.7);
-  position:relative;
-}
-
-.notification{
-  position:absolute;
-  top:15px;
-  left:50%;
-  transform:translateX(-50%);
-  background:linear-gradient(90deg,#ff0050,#ff6ec7);
-  padding:10px 16px;
-  border-radius:12px;
-  font-size:14px;
-  font-weight:bold;
-  opacity:0;
-  transition:0.3s;
-}
-
-.notification.show{
-  opacity:1;
+position:relative;
+text-align:center;
+color:white;
+z-index:2;
+max-width:400px;
+width:100%;
 }
 
 h1{
-  font-size:24px;
-  margin-top:45px;
-  margin-bottom:12px;
+font-size:26px;
+margin-bottom:10px;
 }
 
 p{
-  font-size:15px;
-  line-height:1.5;
-  color:#ccc;
+font-size:16px;
+margin-bottom:25px;
+opacity:0.9;
 }
 
-.live{
-  font-size:14px;
-  color:#00f2ea;
-  margin-top:10px;
-}
-
-.timer{
-  font-size:16px;
-  color:#ff3b5c;
-  font-weight:bold;
-  margin-top:8px;
+.buttons{
+display:flex;
+flex-direction:column;
+gap:12px;
+align-items:center;
 }
 
 button{
-  margin-top:22px;
-  width:100%;
-  padding:16px;
-  border:none;
-  border-radius:12px;
-  font-size:17px;
-  font-weight:bold;
-  background:linear-gradient(90deg,#ff0050,#ff6ec7);
-  color:#fff;
-  cursor:pointer;
+padding:15px;
+font-size:16px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+transition:0.3s;
+width:100%;
+max-width:250px;
+}
+
+.btn1{
+background:#ffffff;
+color:#000;
+}
+
+.btn2{
+background:#25D366;
+color:white;
+animation:pulse 2.5s infinite;
 }
 
 button:hover{
-  opacity:0.9;
+transform:scale(1.05);
+}
+
+@keyframes pulse{
+0%{transform:scale(1);}
+50%{transform:scale(1.05);}
+100%{transform:scale(1);}
+}
+
+/* Mobile adjustment */
+
+@media(max-width:600px){
+
+h1{
+font-size:22px;
+}
+
+p{
+font-size:15px;
+}
+
+button{
+font-size:15px;
+padding:14px;
+}
+
 }
 
 </style>
+<link rel="me" href="https://www.blogger.com/profile/04209175009256562906" />
+<meta name='google-adsense-platform-account' content='ca-host-pub-1556223355139109'/>
+<meta name='google-adsense-platform-domain' content='blogspot.com'/>
 </head>
 
 <body>
 
+<div class="overlay"></div>
+
 <div class="container">
 
-<div id="popup" class="notification"></div>
+<h1>Parabéns! Está a apenas um passo de distância!</h1>
+<p>Por favor, selecione a sua faixa etária para continuar.</p>
 
-<h1>Tem mais de 15 anos?</h1>
-
-<p>Pessoas em <strong>Mozambique</strong> Pode conversar com amigos estrangeiros e ganhar dinheiro extra online. Clique no botão abaixo e siga as instruções para configurar o seu perfil de chat — demora apenas 1 minuto!</p>
-
-<div class="live">🔥 <span id="users">127</span> As pessoas estão a falar agora.</div>
-
-<div class="timer">⏳ Vagas a esgotar <span id="countdown">02:00</span></div>
-
-<button onclick="goOffer()">CONTINUAR</button>
+<div class="buttons">
+<button class="btn1" onclick="goLink()">Tenho menos de 15 anos.</button>
+<button class="btn2" onclick="goLink()">Tenho mais de 15 anos</button>
+</div>
 
 </div>
 
 <script>
-const OFFER="https://ln.run/personal";
 
-/* redirect directly */
-function goOffer(){
-  window.location.href = OFFER;
+function goLink(){
+window.location.href="https://ln.run/personal";
 }
-
-/* fake live user counter */
-setInterval(()=>{
-  let n=document.getElementById("users");
-  let current=parseInt(n.innerText);
-  let change=Math.floor(Math.random()*5);
-  n.innerText=current+change;
-},3000);
-
-/* countdown timer */
-let time=120;
-setInterval(()=>{
-  time--;
-  let m=Math.floor(time/60);
-  let s=time%60;
-  s = s<10?"0"+s:s;
-  document.getElementById("countdown").innerText = (m<10?"0"+m:m)+":"+s;
-  if(time<=0) time=120;
-},1000);
-
-/* top notifications */
-const messages=[
-  "Eusébio Acabei de ganhar 42 dólares a conversar.",
-  "Joaquim Recebi hoje 25 dólares.",
-  "Mateus Entrou há 1 minuto",
-  "Armando começaram a conversar",
-  "Paulo ganhou $31 hoje"
-];
-
-let i=0;
-setInterval(()=>{
-  let popup=document.getElementById("popup");
-  popup.innerText=messages[i%messages.length];
-  popup.classList.add("show");
-  setTimeout(()=>{popup.classList.remove("show");},3000);
-  i++;
-},5000);
 
 </script>
 
