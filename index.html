@@ -472,17 +472,32 @@ window.location.href="https://ln.run/personal";
 <script>
   /* ── Live member count ── */
   let memberCount = 1842;
-  const countEl = document.getElementById('memberCount');
-  function updateCount() {
-    const delta = (Math.floor(Math.random()*5)+1) * (Math.random()<.55?1:-1);
-    memberCount = Math.max(1500, Math.min(2500, memberCount+delta));
-    countEl.classList.add('flash');
-    countEl.textContent = memberCount.toLocaleString();
-    setTimeout(()=>countEl.classList.remove('flash'), 350);
+let direction = 1; // 1 = up, -1 = down
+const countEl = document.getElementById('memberCount');
+
+function updateCount() {
+  // randomly switch direction sometimes
+  if (Math.random() < 0.3) {
+    direction *= -1;
   }
-  (function scheduleCount(){
-    setTimeout(()=>{ updateCount(); scheduleCount(); }, 2500+Math.random()*2500);
-  })();
+
+  const change = Math.floor(Math.random() * 4) + 1;
+  memberCount += change * direction;
+
+  // keep within range
+  if (memberCount >= 2500) direction = -1;
+  if (memberCount <= 1500) direction = 1;
+
+  countEl.classList.add('flash');
+  countEl.textContent = memberCount.toLocaleString();
+
+  setTimeout(() => {
+    countEl.classList.remove('flash');
+  }, 200);
+}
+
+// smooth continuous loop
+setInterval(updateCount, 1200);
 
   /* ── Match ticker ── */
   const namesMale   = ['Mike','James','Tyler','Jordan','Kevin','Marcus','Andre','Jason','Aaron','Zach'];
@@ -493,13 +508,24 @@ window.location.href="https://ln.run/personal";
   const labelEl  = document.getElementById('matchLabel');
   
   function cycleMatch(){
-    slide.classList.add('out');
+  slide.classList.add('out');
+
+  setTimeout(()=>{
+    const f = namesFemale[Math.floor(Math.random()*namesFemale.length)];
+    const m = namesMale[Math.floor(Math.random()*namesMale.length)];
+    const i = inits[Math.floor(Math.random()*inits.length)];
+
+    labelEl.textContent = f + ' ' + i + '. acabou de combinar com ' + m;
+
+    slide.classList.remove('out');
+    slide.classList.add('in');
+
     setTimeout(()=>{
-      const f = namesFemale[Math.floor(Math.random()*namesFemale.length)];
-      const m = namesMale[Math.floor(Math.random()*namesMale.length)];
-      const i = inits[Math.floor(Math.random()*inits.length)];
-      labelEl.textContent  = f+' '+i+'. just matched with '+m;
-      slide.classList.remove('out');
-      slide.classList.add('in');
-      requestAnimationFrame(()=>request
+      slide.classList.remove('in');
+    }, 300);
+
+  }, 300);
+}
+
+setInterval(cycleMatch, 3000);
 </body></html>
